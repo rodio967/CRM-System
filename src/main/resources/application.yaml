@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: crm
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/crm
+    username: postgres
+    password: 3018
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8080
+  error:
+    include-message: always
+
+  logging:
+    level:
+      com.shift.crm: INFO
+
