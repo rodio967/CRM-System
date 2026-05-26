@@ -44,4 +44,16 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Transaction transaction)) return false;
+        return id != null && id.equals(transaction.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
 }

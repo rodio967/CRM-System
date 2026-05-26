@@ -41,5 +41,17 @@ public class Seller {
         this.deleted = true;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Seller seller)) return false;
+        return id != null && id.equals(seller.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
 
 }

@@ -43,8 +43,8 @@ public class TransactionService {
         sellerService.getSellerOrTrow(sellerId);
 
         return transactionalRepository.findAllBySellerIdOrderByTransactionDateAsc(sellerId)
-                .stream().
-                map(transactionMapper::toResponse)
+                .stream()
+                .map(transactionMapper::toResponse)
                 .toList();
     }
 
