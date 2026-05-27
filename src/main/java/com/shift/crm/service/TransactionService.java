@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class TransactionService {
     private final TransactionRepository transactionalRepository;
     private final SellerService sellerService;
     private final TransactionMapper transactionMapper;
+    private final Clock clock;
 
     @Transactional(readOnly = true)
     public List<TransactionResponse> findAll() {
@@ -52,7 +54,7 @@ public class TransactionService {
         Seller seller = sellerService.getActiveSellerOrThrow(request.sellerId());
         LocalDateTime date = request.transactionDate() != null
                 ? request.transactionDate()
-                : LocalDateTime.now();
+                : LocalDateTime.now(clock);
 
         Transaction transaction = new Transaction(
                 seller,

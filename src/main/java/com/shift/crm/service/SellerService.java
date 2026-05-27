@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class SellerService {
 
     private final SellerRepository sellerRepository;
     private final SellerMapper sellerMapper;
+    private final Clock clock;
 
     @Transactional(readOnly = true)
     public List<SellerResponse> findAll() {
@@ -38,7 +40,7 @@ public class SellerService {
     public SellerResponse create(SellerCreateRequest request) {
         Seller seller = new Seller(request.name(),
                 request.contactInfo(),
-                LocalDateTime.now()
+                LocalDateTime.now(clock)
         );
 
         Seller saved = sellerRepository.save(seller);
@@ -52,8 +54,7 @@ public class SellerService {
         if (request.name() != null) seller.setName(request.name());
         if (request.contactInfo() != null) seller.setContactInfo(request.contactInfo());
 
-        Seller saved = sellerRepository.save(seller);
-        return sellerMapper.toResponse(saved);
+        return sellerMapper.toResponse(seller);
     }
 
     // soft delete
