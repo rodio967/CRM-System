@@ -34,7 +34,7 @@ public class AnalyticsService {
 
 
     // 1 запрос
-    public List<ProductiveSellerResponse> findMostProductiveSeller(PeriodType periodType) {
+    public List<ProductiveSellerResponse> findMostProductiveSellers(PeriodType periodType) {
         LocalDateTime now = LocalDateTime.now(clock);
         LocalDateTime start = periodType.startOf(now);
 
@@ -93,7 +93,7 @@ public class AnalyticsService {
     public Optional<BestPeriodResponse> findBestPeriod(Long sellerId, Long periodDays) {
         if (periodDays <= 0) throw new BadRequestException("periodDays должен быть положительным");
 
-        sellerService.getSellerOrTrow(sellerId);
+        sellerService.getSellerOrThrow(sellerId);
 
         List<Transaction> transactions = transactionRepository.findAllBySellerIdOrderByTransactionDateAsc(sellerId);
         if (transactions.isEmpty()) return Optional.empty();
@@ -103,7 +103,7 @@ public class AnalyticsService {
         int bestStart = 0;
         int bestEnd = 0;
         int bestCount = 1;
-        BigDecimal bestSum = BigDecimal.ZERO;
+        BigDecimal bestSum = transactions.getFirst().getAmount();;
 
         // sliding window
         int left = 0;
@@ -120,7 +120,7 @@ public class AnalyticsService {
 
             int count = right - left + 1;
 
-            if (count > bestCount) {
+            if (count > bestCount || (count == bestCount && currentSum.compareTo(bestSum) > 0)) {
                 bestCount = count;
                 bestSum = currentSum;
                 bestStart = left;

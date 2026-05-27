@@ -42,7 +42,7 @@ public class TransactionService {
 
     @Transactional(readOnly = true)
     public List<TransactionResponse> findBySellerId(Long sellerId) {
-        sellerService.getSellerOrTrow(sellerId);
+        sellerService.getSellerOrThrow(sellerId);
 
         return transactionalRepository.findAllBySellerIdOrderByTransactionDateAsc(sellerId)
                 .stream()

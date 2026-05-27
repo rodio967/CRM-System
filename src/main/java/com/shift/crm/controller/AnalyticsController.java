@@ -27,7 +27,7 @@ public class AnalyticsController {
 
     @GetMapping("/most-productive")
     public ResponseEntity<List<ProductiveSellerResponse>> mostProductive(@RequestParam PeriodType period) {
-        return ResponseEntity.ok(analyticsService.findMostProductiveSeller(period));
+        return ResponseEntity.ok(analyticsService.findMostProductiveSellers(period));
     }
 
     @GetMapping("/below-threshold")

@@ -73,11 +73,10 @@ public class SellerService {
     }
 
     @Transactional(readOnly = true)
-    public Seller getSellerOrTrow(Long id) {
+    public Seller getSellerOrThrow(Long id) {
         return sellerRepository.findById(id)
                 .orElseThrow(() -> ResourceNotFoundException.seller(id));
     }
-
 
 
 }
